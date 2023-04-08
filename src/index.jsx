@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
+import axios from "axios";
 
 import "./index.css";
+import TestForm from "./form";
+import TestContextProvider from "./hook/testHook";
+import EventExample from "./testContext";
 
 const books = [
   {
@@ -26,12 +30,14 @@ const books = [
 
 export const BookList = () => {
   return (
-    <section className="booklist">
-      <EventExample />
-      {books.map((book) => {
-        return <Book {...book} key={book.id} />;
-      })}
-    </section>
+    <TestContextProvider>
+      <section className="booklist">
+        <EventExample />
+        {books.map((book) => {
+          return <Book {...book} key={book.id} />;
+        })}
+      </section>
+    </TestContextProvider>
   );
 };
 
@@ -44,39 +50,6 @@ export const Book = (props) => {
       <h4>{author.toUpperCase()}</h4>
       {/* {children} */}
     </article>
-  );
-};
-
-const EventExample = () => {
-  const handleFormInput = (e) => {
-    // console.log("target: ", e.target);
-    // console.log("name: ", e.target.name);
-    // console.log("value: ", e.target.value);
-  };
-  const handleBtnClick = () => {
-    alert("handleBtnClick");
-  };
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    alert("handleFormSubmit");
-    console.log('hey handleFormSubmit');
-  };
-  return (
-    <section>
-      <form onSubmit={handleFormSubmit}>
-        <h2> Typical Form</h2>
-        <input
-          type="text"
-          name="example"
-          style={{ margin: "1rem 0" }}
-          onChange={handleFormInput}
-        ></input>
-        <button onClick={handleBtnClick} type="submit">
-          submit
-        </button>
-      </form>
-    </section>
   );
 };
 
